@@ -4,14 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * 
+ * @author PJ Miranda
+ *
+ */
 @Entity
 public class CreditCard {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private String name;
+	private String bank;
 	private String cardNumber;
 
 	public Long getId() {
@@ -37,5 +43,13 @@ public class CreditCard {
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-	
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
 }

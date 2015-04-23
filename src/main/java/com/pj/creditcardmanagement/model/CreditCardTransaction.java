@@ -8,6 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+/**
+ * 
+ * @author PJ Miranda
+ *
+ */
 @Entity
 public class CreditCardTransaction {
 
