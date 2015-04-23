@@ -38,13 +38,6 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.1</version>
 		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
-			<version>2.2.3</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/jfxrt.jar</systemPath>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -53,8 +46,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
