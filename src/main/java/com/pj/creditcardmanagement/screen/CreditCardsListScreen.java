@@ -1,6 +1,8 @@
 package com.pj.creditcardmanagement.screen;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,19 +28,11 @@ public class CreditCardsListScreen extends StandardScreen {
 
 	@Autowired private CreditCardService creditCardService;
 	
-	private TableView<CreditCard> table = new TableView<>();
+	private TableView<CreditCard> table;
+	private Button addButton = new Button("Add");
 
 	@Override
 	public void layoutComponents(GridPane grid) {
-		int currentRow = 0;
-		
-		ToolBar toolBar = new ToolBar();
-		toolBar.getItems().add(new Button("Add"));
-		
-		grid.add(toolBar, 0, currentRow);
-		
-		currentRow++;
-		
 		TableColumn<CreditCard, String> cardNameColumn = new TableColumn<>("Card Name");
 		cardNameColumn.setCellValueFactory(new PropertyValueFactory<CreditCard, String>("name"));
 		
@@ -52,7 +46,7 @@ public class CreditCardsListScreen extends StandardScreen {
 		table.getColumns().add(bankColumn);
 		table.getColumns().add(cardNumberColumn);
 
-		grid.add(table, 0, currentRow);
+		grid.add(table, 0, 0);
 		
 		GridPane.setHgrow(table, Priority.SOMETIMES);
 		GridPane.setVgrow(table, Priority.SOMETIMES);
@@ -60,6 +54,7 @@ public class CreditCardsListScreen extends StandardScreen {
 
 	@Override
 	public void initializeComponents() {
+		table = new TableView<>();
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	}
 
@@ -67,6 +62,23 @@ public class CreditCardsListScreen extends StandardScreen {
 		ObservableList<CreditCard> creditCards = 
 				new ObservableListWrapper<CreditCard>(creditCardService.getAllCreditCards());
 		table.setItems(creditCards);
+	}
+
+	@Override
+	protected void addToolBarButtons(ToolBar toolBar) {
+		toolBar.getItems().add(addButton);
+		addButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				getScreenController().showAddCreditCardScreen();
+			}
+		});
+	}
+
+	@Override
+	protected void doOnBack() {
+		getScreenController().showMainScreen();
 	}
 	
 }

@@ -52,4 +52,8 @@ public class CreditCard {
 		this.bank = bank;
 	}
 
+	public boolean isNew() {
+		return id == null;
+	}
+
 }

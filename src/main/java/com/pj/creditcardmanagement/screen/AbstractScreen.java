@@ -1,9 +1,8 @@
 package com.pj.creditcardmanagement.screen;
 
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,23 +15,19 @@ public abstract class AbstractScreen {
 
 	@Autowired private ScreenController screenController;
 	
-	private GridPane gridPane = new GridPane();
+	protected abstract void initializeComponents();
 	
-	@PostConstruct
-	public final void initialize() {
+	protected abstract void layoutComponents(GridPane grid);
+	
+	public Scene getScene(double width, double height) {
+		GridPane mainGrid = new GridPane();
+		mainGrid.setAlignment(Pos.CENTER);
+		
 		initializeComponents();
-		layoutComponents(gridPane);
+		layoutComponents(mainGrid);
+		
+		return new Scene(mainGrid, width, height);
 	}
-	
-	public abstract void layoutComponents(GridPane grid);
-	
-	public GridPane getGridPane() {
-		gridPane.setAlignment(Pos.CENTER);
-		return gridPane;
-	}
-	
-	@PostConstruct
-	public abstract void initializeComponents();
 	
 	public ScreenController getScreenController() {
 		return screenController;

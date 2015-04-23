@@ -1,10 +1,11 @@
 package com.pj.creditcardmanagement.screen;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.pj.creditcardmanagement.model.CreditCard;
 
 /**
  * 
@@ -19,6 +20,7 @@ public class ScreenController {
 	
 	@Autowired private MainMenuScreen mainMenuScreen;
 	@Autowired private CreditCardsListScreen creditCardsListScreen;
+	@Autowired private CreditCardScreen creditCardScreen;
 	
 	private Stage stage;
 	
@@ -28,18 +30,32 @@ public class ScreenController {
 
 	public void showMainScreen() {
 		stage.setTitle("Credit Card Management");
-		stage.setScene(new Scene(mainMenuScreen.getGridPane(), WIDTH, HEIGHT));
-		stage.show();
+		stage.setScene(mainMenuScreen.getScene(WIDTH, HEIGHT));
+		if (!stage.isShowing()) {
+			stage.show();
+		}
 	}
 
 	public void showCreditCardsListScreen() {
 		stage.setTitle("Credit Cards List");
-		creditCardsListScreen.updateDisplay();
 		showScreen(creditCardsListScreen);
+		creditCardsListScreen.updateDisplay();
 	}
 
 	private void showScreen(AbstractScreen screen) {
-		stage.setScene(new Scene(screen.getGridPane(), WIDTH, HEIGHT));
+		stage.setScene(screen.getScene(WIDTH, HEIGHT));
 	}
 	
+	public void showAddCreditCardScreen() {
+		stage.setTitle("Add Credit Card");
+		showScreen(creditCardScreen);
+		creditCardScreen.updateDisplay(new CreditCard());
+	}
+
+	public void showUpdateCreditCardScreen(CreditCard creditCard) {
+		stage.setTitle("Update Credit Card");
+		showScreen(creditCardScreen);
+		creditCardScreen.updateDisplay(creditCard);
+	}
+
 }
