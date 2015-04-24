@@ -16,8 +16,6 @@ import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.pj.creditcardmanagement.dialog.ErrorDialog;
-import com.pj.creditcardmanagement.dialog.MessageDialog;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardTransaction;
 import com.pj.creditcardmanagement.service.CreditCardService;
@@ -73,29 +71,29 @@ public class CreditCardTransactionScreen extends StandardScreen {
 		try {
 			creditCardTransactionService.save(transaction);
 		} catch (Exception e) {
-			ErrorDialog.show("Unexpected error occurred");
+			ShowDialog.error("Unexpected error occurred");
 			return;
 		}
 		
-		MessageDialog.show("Credit Card Transaction saved");
+		ShowDialog.info("Credit Card Transaction saved");
 		getScreenController().showUpdateCreditCardTransactionScreen(transaction);
 	}
 
 	private boolean validateFields() {
 		if (creditCardComboBox.getSelectionModel().isEmpty()) {
-			ErrorDialog.show("Credit Card must be specified");
+			ShowDialog.error("Credit Card must be specified");
 			return false;
 		}
 		if (amountField.getText().isEmpty()) {
-			ErrorDialog.show("Amount must be specified");
+			ShowDialog.error("Amount must be specified");
 			return false;
 		}
 		if (!NumberUtil.isAmount(amountField.getText())) {
-			ErrorDialog.show("Amount must be a valid amount");
+			ShowDialog.error("Amount must be a valid amount");
 			return false;
 		}
 		if (datePicker.getValue() == null) {
-			ErrorDialog.show("Transaction Date must be specified");
+			ShowDialog.error("Transaction Date must be specified");
 			return false;
 		}
 		return true;
@@ -136,12 +134,12 @@ public class CreditCardTransactionScreen extends StandardScreen {
 	}
 
 	private void deleteCreditCardTransaction() {
-		if (confirm("Delete Credit Card Transaction?")) {
+		if (ShowDialog.confirm("Delete Credit Card Transaction?")) {
 			try {
 				creditCardTransactionService.delete(transaction);
 			} catch (Exception e) {
 				e.printStackTrace();
-				ErrorDialog.show("Unexpected error occurred");
+				ShowDialog.error("Unexpected error occurred");
 				return;
 			}
 			

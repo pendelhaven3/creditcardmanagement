@@ -13,8 +13,6 @@ import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.pj.creditcardmanagement.dialog.ErrorDialog;
-import com.pj.creditcardmanagement.dialog.MessageDialog;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.service.CreditCardService;
 import com.pj.creditcardmanagement.util.LayoutUtil;
@@ -63,25 +61,25 @@ public class CreditCardScreen extends StandardScreen {
 		try {
 			creditCardService.save(creditCard);
 		} catch (Exception e) {
-			ErrorDialog.show("Unexpected error occurred");
+			ShowDialog.error("Unexpected error occurred");
 			return;
 		}
 		
-		MessageDialog.show("Credit Card saved");
+		ShowDialog.info("Credit Card saved");
 		getScreenController().showUpdateCreditCardScreen(creditCard);
 	}
 
 	private boolean validateFields() {
 		if (nameField.getText().isEmpty()) {
-			ErrorDialog.show("Name must be specified");
+			ShowDialog.error("Name must be specified");
 			return false;
 		}
 		if (bankField.getText().isEmpty()) {
-			ErrorDialog.show("Bank must be specified");
+			ShowDialog.error("Bank must be specified");
 			return false;
 		}
 		if (cardNumberField.getText().isEmpty()) {
-			ErrorDialog.show("Card Number must be specified");
+			ShowDialog.error("Card Number must be specified");
 			return false;
 		}
 		return true;
