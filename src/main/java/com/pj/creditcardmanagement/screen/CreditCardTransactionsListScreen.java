@@ -56,7 +56,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 					
 		});
 		
-		TableColumn<CreditCardTransaction, String> dateColumn = new TableColumn<>("Date");
+		TableColumn<CreditCardTransaction, String> dateColumn = new TableColumn<>("Transaction Date");
 		dateColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<CreditCardTransaction,String>, ObservableValue<String>>() {
 			
@@ -102,7 +102,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				getScreenController().showAddCreditCardScreen();
+				getScreenController().showAddCreditCardTransactionScreen();
 			}
 		});
 	}

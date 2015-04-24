@@ -2,9 +2,10 @@ package com.pj.creditcardmanagement.util;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+import com.pj.creditcardmanagement.Constants;
 
 /**
  * 
@@ -13,15 +14,17 @@ import java.util.Date;
  */
 public class FormatterUtil {
 
-	private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-	private static final String AMOUNT_FORMAT = "#,##0.00";
+	private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
 	
 	public static String formatDate(Date date) {
-		return dateFormatter.format(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		if (date == null) {
+			return "";
+		}
+		return dateFormatter.format(DateUtil.toLocalDate(date));
 	}
 
 	public static String formatAmount(BigDecimal amount) {
-		return new DecimalFormat(AMOUNT_FORMAT).format(amount);
+		return new DecimalFormat(Constants.AMOUNT_FORMAT).format(amount);
 	}
 	
 }

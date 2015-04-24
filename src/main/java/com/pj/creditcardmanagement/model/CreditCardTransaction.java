@@ -58,4 +58,8 @@ public class CreditCardTransaction {
 		this.date = date;
 	}
 
+	public boolean isNew() {
+		return id == null;
+	}
+
 }

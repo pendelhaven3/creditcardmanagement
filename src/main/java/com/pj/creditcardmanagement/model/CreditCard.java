@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * 
  * @author PJ Miranda
@@ -61,4 +64,25 @@ public class CreditCard {
 		return name;
 	}
 
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+			.append(id)
+			.toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+        if (!(obj instanceof CreditCard)) {
+            return false;
+        }
+        CreditCard other = (CreditCard)obj;		
+		return new EqualsBuilder()
+			.append(id, other.getId())
+			.isEquals();
+	}
+	
 }
