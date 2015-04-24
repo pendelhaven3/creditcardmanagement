@@ -11,5 +11,7 @@ public interface CreditCardTransactionService {
 	void save(CreditCardTransaction transaction);
 
 	CreditCardTransaction getCreditCardTransaction(long id);
+
+	void delete(CreditCardTransaction transaction);
 	
 }

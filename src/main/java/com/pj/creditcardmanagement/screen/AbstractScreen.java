@@ -1,7 +1,12 @@
 package com.pj.creditcardmanagement.screen;
 
+import java.util.Optional;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +36,14 @@ public abstract class AbstractScreen {
 	
 	public ScreenController getScreenController() {
 		return screenController;
+	}
+	
+	public boolean confirm(String message) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setContentText(message);
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		return result.isPresent() && result.get() == ButtonType.OK;
 	}
 	
 }

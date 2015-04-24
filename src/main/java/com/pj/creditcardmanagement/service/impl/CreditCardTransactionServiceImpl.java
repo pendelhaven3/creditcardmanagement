@@ -36,5 +36,11 @@ public class CreditCardTransactionServiceImpl implements CreditCardTransactionSe
 	public CreditCardTransaction getCreditCardTransaction(long id) {
 		return creditCardTransactionDao.get(id);
 	}
+
+	@Transactional
+	@Override
+	public void delete(CreditCardTransaction transaction) {
+		creditCardTransactionDao.delete(transaction);
+	}
 	
 }

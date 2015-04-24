@@ -11,5 +11,7 @@ public interface CreditCardTransactionDao {
 	List<CreditCardTransaction> getAll();
 
 	CreditCardTransaction get(long id);
+
+	void delete(CreditCardTransaction transaction);
 	
 }

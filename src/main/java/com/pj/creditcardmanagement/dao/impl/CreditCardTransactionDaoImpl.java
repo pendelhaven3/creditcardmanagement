@@ -55,4 +55,9 @@ public class CreditCardTransactionDaoImpl implements CreditCardTransactionDao {
 		}
 	}
 
+	@Override
+	public void delete(CreditCardTransaction transaction) {
+		entityManager.remove(get(transaction.getId()));
+	}
+
 }

@@ -42,7 +42,8 @@ public class CreditCardTransactionScreen extends StandardScreen {
 	private TextField amountField;
 	private DatePicker datePicker;
 	private Button saveButton = new Button("Save");
-	private CreditCardTransaction creditCardTransaction;
+	private Button deleteButton = new Button("Delete");
+	private CreditCardTransaction transaction;
 	
 	public CreditCardTransactionScreen() {
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -66,18 +67,18 @@ public class CreditCardTransactionScreen extends StandardScreen {
 			return;
 		}
 		
-		creditCardTransaction.setCreditCard(creditCardComboBox.getSelectionModel().getSelectedItem());
-		creditCardTransaction.setAmount(NumberUtil.toBigDecimal(amountField.getText()));
-		creditCardTransaction.setDate(DateUtil.toDate(datePicker.getValue()));
+		transaction.setCreditCard(creditCardComboBox.getSelectionModel().getSelectedItem());
+		transaction.setAmount(NumberUtil.toBigDecimal(amountField.getText()));
+		transaction.setDate(DateUtil.toDate(datePicker.getValue()));
 		try {
-			creditCardTransactionService.save(creditCardTransaction);
+			creditCardTransactionService.save(transaction);
 		} catch (Exception e) {
 			ErrorDialog.show("Unexpected error occurred");
 			return;
 		}
 		
 		MessageDialog.show("Credit Card Transaction saved");
-		getScreenController().showUpdateCreditCardTransactionScreen(creditCardTransaction);
+		getScreenController().showUpdateCreditCardTransactionScreen(transaction);
 	}
 
 	private boolean validateFields() {
@@ -130,6 +131,22 @@ public class CreditCardTransactionScreen extends StandardScreen {
 
 	@Override
 	protected void addToolBarButtons(ToolBar toolBar) {
+		toolBar.getItems().add(deleteButton);
+		deleteButton.setOnAction(e -> deleteCreditCardTransaction());
+	}
+
+	private void deleteCreditCardTransaction() {
+		if (confirm("Delete Credit Card Transaction?")) {
+			try {
+				creditCardTransactionService.delete(transaction);
+			} catch (Exception e) {
+				e.printStackTrace();
+				ErrorDialog.show("Unexpected error occurred");
+				return;
+			}
+			
+			getScreenController().showCreditCardTransactionsListScreen();
+		}
 	}
 
 	@Override
@@ -140,21 +157,17 @@ public class CreditCardTransactionScreen extends StandardScreen {
 	public void updateDisplay(CreditCardTransaction transaction) {
 		creditCardComboBox.setItems(FXCollections.observableList(creditCardService.getAllCreditCards()));
 		
-		this.creditCardTransaction = transaction;
+		this.transaction = transaction;
 		
 		if (transaction.isNew()) {
 			return;
 		}
 		
-		this.creditCardTransaction = transaction = creditCardTransactionService.getCreditCardTransaction(transaction.getId());
+		this.transaction = transaction = creditCardTransactionService.getCreditCardTransaction(transaction.getId());
 		
 		creditCardComboBox.getSelectionModel().select(transaction.getCreditCard());
 		amountField.setText(FormatterUtil.formatAmount(transaction.getAmount()));
-		if (transaction.getDate() != null) {
-			datePicker.setValue(DateUtil.toLocalDate(transaction.getDate()));
-		} else {
-			datePicker.setValue(null);
-		}
+		datePicker.setValue(DateUtil.toLocalDate(transaction.getDate()));
 	}
 
 }
