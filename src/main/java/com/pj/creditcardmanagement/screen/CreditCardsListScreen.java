@@ -1,9 +1,14 @@
 package com.pj.creditcardmanagement.screen;
 
-import javafx.collections.ObservableList;
+import java.util.List;
+
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
@@ -18,7 +23,6 @@ import org.springframework.stereotype.Component;
 import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.service.CreditCardService;
-import com.sun.javafx.collections.ObservableListWrapper;
 
 /**
  * 
@@ -32,9 +36,12 @@ public class CreditCardsListScreen extends StandardScreen {
 	
 	private TableView<CreditCard> table;
 	private Button addButton = new Button("Add");
+	private Label totalItemsField;
 
 	@Override
 	public void layoutComponents(GridPane grid) {
+		grid.setVgap(10);
+		
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		TableColumn<CreditCard, String> cardNameColumn = new TableColumn<>("Card Name");
@@ -51,9 +58,13 @@ public class CreditCardsListScreen extends StandardScreen {
 		table.getColumns().add(cardNumberColumn);
 
 		grid.add(table, 0, 0);
+		GridPane.setHgrow(table, Priority.ALWAYS);
+		GridPane.setVgrow(table, Priority.ALWAYS);
 		
-		GridPane.setHgrow(table, Priority.SOMETIMES);
-		GridPane.setVgrow(table, Priority.SOMETIMES);
+		grid.add(totalItemsField, 0, 1);
+		GridPane.setHgrow(totalItemsField, Priority.ALWAYS);
+		GridPane.setHalignment(totalItemsField, HPos.CENTER);
+		GridPane.setMargin(totalItemsField, new Insets(0, 0, 5, 0));
 	}
 
 	@Override
@@ -68,12 +79,14 @@ public class CreditCardsListScreen extends StandardScreen {
 				}
 			}
 		});
+		
+		totalItemsField = new Label();
 	}
 
 	public void updateDisplay() {
-		ObservableList<CreditCard> creditCards = 
-				new ObservableListWrapper<CreditCard>(creditCardService.getAllCreditCards());
-		table.setItems(creditCards);
+		List<CreditCard> creditCards = creditCardService.getAllCreditCards();
+		table.setItems(FXCollections.observableList(creditCards));
+		totalItemsField.setText("Total Items:   " + String.valueOf(creditCards.size()));
 	}
 
 	@Override
