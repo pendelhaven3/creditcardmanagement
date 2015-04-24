@@ -13,6 +13,8 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class ShowDialog {
 
+	private static final String UNEXPECTED_ERROR_MESSAGE = "Unexpected error occurred";
+	
 	public static boolean confirm(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText(message);
@@ -34,6 +36,10 @@ public class ShowDialog {
 		alert.setContentText(message);
 		alert.setHeaderText(null);
 		alert.showAndWait();
+	}
+	
+	public static void unexpectedError() {
+		error(UNEXPECTED_ERROR_MESSAGE);
 	}
 	
 }

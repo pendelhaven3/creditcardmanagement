@@ -36,5 +36,11 @@ public class CreditCardServiceImpl implements CreditCardService {
 	public CreditCard getCreditCard(long id) {
 		return creditCardDao.get(id);
 	}
+
+	@Transactional
+	@Override
+	public void delete(CreditCard creditCard) {
+		creditCardDao.delete(creditCard);
+	}
 	
 }

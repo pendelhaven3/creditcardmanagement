@@ -31,6 +31,7 @@ public class CreditCardScreen extends StandardScreen {
 	private TextField bankField;
 	private TextField cardNumberField;
 	private Button saveButton = new Button("Save");
+	private Button deleteButton = new Button("Delete");
 	private CreditCard creditCard;
 	
 	public CreditCardScreen() {
@@ -115,6 +116,23 @@ public class CreditCardScreen extends StandardScreen {
 
 	@Override
 	protected void addToolBarButtons(ToolBar toolBar) {
+		toolBar.getItems().add(deleteButton);
+		deleteButton.setOnAction(event -> deleteCreditCard());
+	}
+
+	private void deleteCreditCard() {
+		if (ShowDialog.confirm("Delete Credit Card?")) {
+			try {
+				creditCardService.delete(creditCard);
+			} catch (Exception e) {
+				e.printStackTrace();
+				ShowDialog.unexpectedError();
+				return;
+			}
+			
+			ShowDialog.info("Credit Card deleted");
+			getScreenController().showCreditCardsListScreen();
+		}
 	}
 
 	@Override
