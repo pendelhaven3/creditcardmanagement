@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pj.creditcardmanagement.component.UppercaseTextField;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.service.CreditCardService;
 import com.pj.creditcardmanagement.util.LayoutUtil;
@@ -46,8 +47,8 @@ public class CreditCardScreen extends StandardScreen {
 	
 	@Override
 	public void initializeComponents() {
-		nameField = new TextField();
-		bankField = new TextField();
+		nameField = new UppercaseTextField();
+		bankField = new UppercaseTextField();
 		cardNumberField = new TextField();
 	}
 
