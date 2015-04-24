@@ -2,6 +2,7 @@ package com.pj.creditcardmanagement.screen;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -33,6 +34,8 @@ public class CreditCardsListScreen extends StandardScreen {
 
 	@Override
 	public void layoutComponents(GridPane grid) {
+		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 		TableColumn<CreditCard, String> cardNameColumn = new TableColumn<>("Card Name");
 		cardNameColumn.setCellValueFactory(new PropertyValueFactory<CreditCard, String>("name"));
 		
@@ -55,7 +58,13 @@ public class CreditCardsListScreen extends StandardScreen {
 	@Override
 	public void initializeComponents() {
 		table = new TableView<>();
-		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		table.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				getScreenController().showUpdateCreditCardScreen(table.getSelectionModel().getSelectedItem());
+			}
+		});
 	}
 
 	public void updateDisplay() {
