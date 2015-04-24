@@ -156,6 +156,7 @@ public class CreditCardTransactionScreen extends StandardScreen {
 		creditCardComboBox.setItems(FXCollections.observableList(creditCardService.getAllCreditCards()));
 		
 		this.transaction = transaction;
+		deleteButton.setDisable(transaction.isNew());
 		
 		if (transaction.isNew()) {
 			return;

@@ -142,6 +142,7 @@ public class CreditCardScreen extends StandardScreen {
 
 	public void updateDisplay(CreditCard creditCard) {
 		this.creditCard = creditCard;
+		deleteButton.setDisable(creditCard.isNew());
 		
 		if (creditCard.isNew()) {
 			return;
