@@ -76,7 +76,7 @@ public class CreditCardTransactionScreen extends StandardScreen {
 		}
 		
 		ShowDialog.info("Credit Card Transaction saved");
-		getScreenController().showUpdateCreditCardTransactionScreen(transaction);
+		getScreenController().showCreditCardTransactionsListScreen();
 	}
 
 	private boolean validateFields() {

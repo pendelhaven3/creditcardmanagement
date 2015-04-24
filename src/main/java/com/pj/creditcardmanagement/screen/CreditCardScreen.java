@@ -68,7 +68,7 @@ public class CreditCardScreen extends StandardScreen {
 		}
 		
 		ShowDialog.info("Credit Card saved");
-		getScreenController().showUpdateCreditCardScreen(creditCard);
+		getScreenController().showCreditCardsListScreen();
 	}
 
 	private boolean validateFields() {
