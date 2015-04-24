@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pj.creditcardmanagement.dao.CreditCardTransactionDao;
 import com.pj.creditcardmanagement.model.CreditCardTransaction;
+import com.pj.creditcardmanagement.model.CreditCardTransactionSearchCriteria;
 import com.pj.creditcardmanagement.service.CreditCardTransactionService;
 
 /**
@@ -41,6 +42,11 @@ public class CreditCardTransactionServiceImpl implements CreditCardTransactionSe
 	@Override
 	public void delete(CreditCardTransaction transaction) {
 		creditCardTransactionDao.delete(transaction);
+	}
+
+	@Override
+	public List<CreditCardTransaction> searchCreditCardTransactions(CreditCardTransactionSearchCriteria criteria) {
+		return creditCardTransactionDao.search(criteria);
 	}
 	
 }

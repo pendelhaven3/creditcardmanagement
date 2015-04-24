@@ -2,6 +2,7 @@ package com.pj.creditcardmanagement.screen;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -19,8 +20,10 @@ import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pj.creditcardmanagement.dialog.FilterCreditCardTransactionsDialog;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardTransaction;
+import com.pj.creditcardmanagement.model.CreditCardTransactionSearchCriteria;
 import com.pj.creditcardmanagement.service.CreditCardTransactionService;
 import com.pj.creditcardmanagement.util.FormatterUtil;
 import com.sun.javafx.collections.ObservableListWrapper;
@@ -34,9 +37,11 @@ import com.sun.javafx.collections.ObservableListWrapper;
 public class CreditCardTransactionsListScreen extends StandardScreen {
 
 	@Autowired private CreditCardTransactionService creditCardTransactionService;
+	@Autowired private FilterCreditCardTransactionsDialog filterCreditCardTransactionsDialog;
 	
 	private TableView<CreditCardTransaction> table;
 	private Button addButton = new Button("Add");
+	private Button filterButton = new Button("Filter");
 
 	@Override
 	public void layoutComponents(GridPane grid) {
@@ -62,7 +67,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<CreditCardTransaction, String> param) {
-				return new ReadOnlyStringWrapper(FormatterUtil.formatDate(param.getValue().getDate()));
+				return new ReadOnlyStringWrapper(FormatterUtil.formatDate(param.getValue().getTransactionDate()));
 			}
 			
 		});
@@ -105,6 +110,20 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 				getScreenController().showAddCreditCardTransactionScreen();
 			}
 		});
+		
+		toolBar.getItems().add(filterButton);
+		filterButton.setOnAction(event -> showFilterCreditCardTransactionsDialog());
+	}
+
+	private void showFilterCreditCardTransactionsDialog() {
+		filterCreditCardTransactionsDialog.showAndWait();
+		
+		CreditCardTransactionSearchCriteria criteria = 
+				filterCreditCardTransactionsDialog.getCreditCardTransactionSearchCriteria();
+		if (criteria != null) {
+			table.setItems(FXCollections.observableList(
+					creditCardTransactionService.searchCreditCardTransactions(criteria)));
+		}
 	}
 
 	@Override

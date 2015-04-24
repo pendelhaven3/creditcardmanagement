@@ -24,7 +24,7 @@ public class CreditCardTransaction {
 	private CreditCard creditCard;
 
 	private BigDecimal amount;
-	private Date date;
+	private Date transactionDate;
 
 	public Long getId() {
 		return id;
@@ -50,12 +50,12 @@ public class CreditCardTransaction {
 		this.amount = amount;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getTransactionDate() {
+		return transactionDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
 	}
 
 	public boolean isNew() {

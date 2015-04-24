@@ -67,7 +67,7 @@ public class CreditCardTransactionScreen extends StandardScreen {
 		
 		transaction.setCreditCard(creditCardComboBox.getSelectionModel().getSelectedItem());
 		transaction.setAmount(NumberUtil.toBigDecimal(amountField.getText()));
-		transaction.setDate(DateUtil.toDate(datePicker.getValue()));
+		transaction.setTransactionDate(DateUtil.toDate(datePicker.getValue()));
 		try {
 			creditCardTransactionService.save(transaction);
 		} catch (Exception e) {
@@ -165,7 +165,7 @@ public class CreditCardTransactionScreen extends StandardScreen {
 		
 		creditCardComboBox.getSelectionModel().select(transaction.getCreditCard());
 		amountField.setText(FormatterUtil.formatAmount(transaction.getAmount()));
-		datePicker.setValue(DateUtil.toLocalDate(transaction.getDate()));
+		datePicker.setValue(DateUtil.toLocalDate(transaction.getTransactionDate()));
 	}
 
 }
