@@ -100,7 +100,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(0, 5, 5, 0));
-		grid.setAlignment(Pos.CENTER_RIGHT);
+		grid.setAlignment(Pos.CENTER);
 		
 		grid.add(new Label("Total Items"), 0, 0);
 		grid.add(totalItemsField, 1, 0);

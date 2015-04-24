@@ -52,6 +52,10 @@ public class FilterCreditCardTransactionsDialog extends Stage {
 		transactionDateFromDatePicker = new DatePicker();
 		transactionDateToDatePicker = new DatePicker();
 		
+		LocalDate now = LocalDate.now();
+		transactionDateFromDatePicker.setValue(now);
+		transactionDateToDatePicker.setValue(now);
+		
 		filterButton = new Button("Filter");
 		filterButton.setOnAction(event -> returnCreditCardTransactionSearchCriteria());
 	}
@@ -100,10 +104,6 @@ public class FilterCreditCardTransactionsDialog extends Stage {
 	public void updateDisplay() {
 		criteria = null;
 		creditCardComboBox.setItems(FXCollections.observableList(creditCardService.getAllCreditCards()));
-		
-		LocalDate now = LocalDate.now();
-		transactionDateFromDatePicker.setValue(now);
-		transactionDateToDatePicker.setValue(now);
 	}
 	
 	@Override
