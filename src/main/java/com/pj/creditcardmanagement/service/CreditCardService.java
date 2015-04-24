@@ -18,5 +18,7 @@ public interface CreditCardService {
 	CreditCard getCreditCard(long id);
 
 	void delete(CreditCard creditCard);
+
+	CreditCard getCreditCardByName(String name);
 	
 }

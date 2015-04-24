@@ -60,4 +60,18 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		entityManager.remove(get(creditCard.getId()));
 	}
 
+	@Override
+	public CreditCard findByName(String name) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<CreditCard> criteria = builder.createQuery(CreditCard.class);
+		Root<CreditCard> creditCard = criteria.from(CreditCard.class);
+		criteria.where(creditCard.get("name").in(name));
+		
+		try {
+			return entityManager.createQuery(criteria).getSingleResult();
+		} catch (NoResultException | NonUniqueResultException e) {
+			return null;
+		}
+	}
+
 }

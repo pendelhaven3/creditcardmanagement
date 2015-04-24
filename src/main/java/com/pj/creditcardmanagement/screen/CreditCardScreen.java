@@ -76,6 +76,10 @@ public class CreditCardScreen extends StandardScreen {
 			ShowDialog.error("Name must be specified");
 			return false;
 		}
+		if (isCreditCardNameExisting(nameField.getText())) {
+			ShowDialog.error("Name is already used by another record");
+			return false;
+		}
 		if (bankField.getText().isEmpty()) {
 			ShowDialog.error("Bank must be specified");
 			return false;
@@ -85,6 +89,11 @@ public class CreditCardScreen extends StandardScreen {
 			return false;
 		}
 		return true;
+	}
+
+	private boolean isCreditCardNameExisting(String name) {
+		CreditCard existing = creditCardService.getCreditCardByName(name);
+		return existing != null && !existing.equals(creditCard);
 	}
 
 	@Override

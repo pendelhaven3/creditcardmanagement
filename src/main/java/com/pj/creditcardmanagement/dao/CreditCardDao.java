@@ -13,5 +13,7 @@ public interface CreditCardDao {
 	CreditCard get(long id);
 
 	void delete(CreditCard creditCard);
+
+	CreditCard findByName(String name);
 	
 }

@@ -42,5 +42,10 @@ public class CreditCardServiceImpl implements CreditCardService {
 	public void delete(CreditCard creditCard) {
 		creditCardDao.delete(creditCard);
 	}
+
+	@Override
+	public CreditCard getCreditCardByName(String name) {
+		return creditCardDao.findByName(name);
+	}
 	
 }
