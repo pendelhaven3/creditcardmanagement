@@ -42,6 +42,9 @@ import com.pj.creditcardmanagement.util.FormatterUtil;
 @Component
 public class CreditCardTransactionsListScreen extends StandardScreen {
 
+	private static final String FX_ALIGNMENT_CENTER_RIGHT = "-fx-alignment: CENTER-RIGHT";
+	private static final String FX_ALIGNMENT_CENTER = "-fx-alignment: CENTER";
+	
 	@Autowired private CreditCardTransactionService creditCardTransactionService;
 	@Autowired private FilterCreditCardTransactionsDialog filterCreditCardTransactionsDialog;
 	
@@ -57,8 +60,21 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 		
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+		TableColumn<CreditCardTransaction, String> transactionDateColumn = new TableColumn<>("Transaction Date");
+		transactionDateColumn.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CreditCardTransaction,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<CreditCardTransaction, String> param) {
+				return new ReadOnlyStringWrapper(FormatterUtil.formatDate(param.getValue().getTransactionDate()));
+			}
+			
+		});
+		transactionDateColumn.setStyle(FX_ALIGNMENT_CENTER);
+
 		TableColumn<CreditCardTransaction, CreditCard> creditCardColumn = new TableColumn<>("Credit Card");
 		creditCardColumn.setCellValueFactory(new PropertyValueFactory<CreditCardTransaction, CreditCard>("creditCard"));
+		creditCardColumn.setStyle(FX_ALIGNMENT_CENTER);
 		
 		TableColumn<CreditCardTransaction, String> amountColumn = new TableColumn<>("Amount");
 		amountColumn.setCellValueFactory(
@@ -70,21 +86,11 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 					}
 					
 		});
+		amountColumn.setStyle(FX_ALIGNMENT_CENTER_RIGHT);
 		
-		TableColumn<CreditCardTransaction, String> dateColumn = new TableColumn<>("Transaction Date");
-		dateColumn.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<CreditCardTransaction,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CreditCardTransaction, String> param) {
-				return new ReadOnlyStringWrapper(FormatterUtil.formatDate(param.getValue().getTransactionDate()));
-			}
-			
-		});
-
+		table.getColumns().add(transactionDateColumn);
 		table.getColumns().add(creditCardColumn);
 		table.getColumns().add(amountColumn);
-		table.getColumns().add(dateColumn);
 
 		grid.add(table, 0, 0);
 		
