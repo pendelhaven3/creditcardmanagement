@@ -157,6 +157,7 @@ public class CreditCardTransactionScreen extends StandardScreen {
 		
 		this.transaction = transaction;
 		deleteButton.setDisable(transaction.isNew());
+		creditCardComboBox.requestFocus();
 		
 		if (transaction.isNew()) {
 			return;
