@@ -7,7 +7,6 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +17,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Callback;
@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pj.creditcardmanagement.Constants;
+import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
 import com.pj.creditcardmanagement.dialog.FilterCreditCardTransactionsDialog;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardTransaction;
@@ -118,11 +119,13 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 	@Override
 	public void initializeComponents() {
 		table = new TableView<>();
-		table.setOnMouseClicked(new EventHandler<Event>() {
-
+		table.setOnMouseClicked(new DoubleClickEventHandler() {
+			
 			@Override
-			public void handle(Event event) {
-				getScreenController().showUpdateCreditCardTransactionScreen(table.getSelectionModel().getSelectedItem());
+			protected void onDoubleClick(MouseEvent event) {
+				if (!table.getSelectionModel().isEmpty()) {
+					getScreenController().showUpdateCreditCardTransactionScreen(table.getSelectionModel().getSelectedItem());
+				}
 			}
 		});
 		

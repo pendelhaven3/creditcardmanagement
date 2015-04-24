@@ -2,19 +2,20 @@ package com.pj.creditcardmanagement.screen;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.service.CreditCardService;
 import com.sun.javafx.collections.ObservableListWrapper;
@@ -58,11 +59,13 @@ public class CreditCardsListScreen extends StandardScreen {
 	@Override
 	public void initializeComponents() {
 		table = new TableView<>();
-		table.setOnMouseClicked(new EventHandler<Event>() {
-
+		table.setOnMouseClicked(new DoubleClickEventHandler() {
+			
 			@Override
-			public void handle(Event event) {
-				getScreenController().showUpdateCreditCardScreen(table.getSelectionModel().getSelectedItem());
+			protected void onDoubleClick(MouseEvent event) {
+				if (!table.getSelectionModel().isEmpty()) {
+					getScreenController().showUpdateCreditCardScreen(table.getSelectionModel().getSelectedItem());
+				}
 			}
 		});
 	}
