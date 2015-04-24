@@ -55,5 +55,10 @@ public class CreditCard {
 	public boolean isNew() {
 		return id == null;
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

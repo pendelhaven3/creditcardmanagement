@@ -48,6 +48,13 @@ public class MainMenuScreen extends AbstractScreen {
 		});
 		
 		transactionsButton = new Button();
+		transactionsButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				getScreenController().showCreditCardTransactionsListScreen();
+			}
+		});
 	}
 
 }

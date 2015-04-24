@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pj.creditcardmanagement.model.CreditCard;
+import com.pj.creditcardmanagement.model.CreditCardTransaction;
 
 /**
  * 
@@ -21,6 +22,7 @@ public class ScreenController {
 	@Autowired private MainMenuScreen mainMenuScreen;
 	@Autowired private CreditCardsListScreen creditCardsListScreen;
 	@Autowired private CreditCardScreen creditCardScreen;
+	@Autowired private CreditCardTransactionsListScreen creditCardTransactionsListScreen;
 	
 	private Stage stage;
 	
@@ -56,6 +58,15 @@ public class ScreenController {
 		stage.setTitle("Update Credit Card");
 		showScreen(creditCardScreen);
 		creditCardScreen.updateDisplay(creditCard);
+	}
+
+	public void showCreditCardTransactionsListScreen() {
+		stage.setTitle("Credit Card Transactions List");
+		showScreen(creditCardTransactionsListScreen);
+		creditCardTransactionsListScreen.updateDisplay();
+	}
+
+	public void showUpdateCreditCardTransactionScreen(CreditCardTransaction transaction) {
 	}
 
 }
