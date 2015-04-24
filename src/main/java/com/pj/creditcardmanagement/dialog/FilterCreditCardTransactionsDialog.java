@@ -41,6 +41,7 @@ public class FilterCreditCardTransactionsDialog extends Stage {
 	private CreditCardTransactionSearchCriteria criteria;
 	
 	public FilterCreditCardTransactionsDialog() {
+		setTitle("Filter Credit Card Transactions");
 		setResizable(false);
 		initModality(Modality.APPLICATION_MODAL);
 		initializeComponents();
