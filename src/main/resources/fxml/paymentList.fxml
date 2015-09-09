@@ -7,12 +7,15 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.ToolBar?>
+<?import java.net.URL?>
+<?import java.lang.String?>
 
 <VBox fx:controller="com.pj.creditcardmanagement.controller.PaymentListController" xmlns:fx="http://javafx.com/fxml"
 	alignment="center">
 	
 	<ToolBar>
 		<Button text="Back" onAction="#doOnBack" />
+		<Button text="Add" onAction="#addPayment" />
 	</ToolBar>
 	
 	<TableView fx:id="paymentsTable">
@@ -22,57 +25,13 @@
 		        <cellValueFactory><PropertyValueFactory property="creditCard" />
 		        </cellValueFactory>
 			</TableColumn>
-			<TableColumn text="Payment Date">
-		        <cellValueFactory><PropertyValueFactory property="paymentDate" />
-		        </cellValueFactory>
-		    </TableColumn>
-			<TableColumn text="Amount">
-		        <cellValueFactory><PropertyValueFactory property="amount" />
-		        </cellValueFactory>
-			</TableColumn>
+			<TableColumn text="Payment Date" fx:id="paymentDateTableColumn" />
+			<TableColumn text="Amount" fx:id="amountTableColumn" />
 		</columns>
 	</TableView>
+
+	<stylesheets>
+		<String fx:value="css/main.css" />
+	</stylesheets>
 	
-	<!-- 
-          <columns>
-              <TableColumn fx:id="firstNameColumn" text="First Name" prefWidth="100">
-                  <cellValueFactory>
-                      <PropertyValueFactory property="firstName" />
-                  </cellValueFactory>
-                  <cellFactory>
-                      <FormattedTableCellFactory alignment="center">
-                      </FormattedTableCellFactory>
-                  </cellFactory>
-              </TableColumn>
-              <TableColumn text="Last Name" prefWidth="100">
-                  <cellValueFactory>
-                      <PropertyValueFactory property="lastName" />
-                  </cellValueFactory>
-              </TableColumn>
-              <TableColumn text="Email Address" prefWidth="200">
-                  <cellValueFactory>
-                      <PropertyValueFactory property="email" />
-                  </cellValueFactory>
-              </TableColumn>
-          </columns>    
-          <items>
-              <FXCollections fx:factory="observableArrayList">
-                  <Person firstName="Jacob" lastName="Smith"  
-                          email="jacob.smith@example.com"/>
-                  <Person firstName="Isabella" lastName="Johnson" 
-                          email="isabella.johnson@example.com"/>
-                  <Person firstName="Ethan" lastName="Williams" 
-                          email="ethan.williams@example.com"/>
-                  <Person firstName="Emma" lastName="Jones" 
-                          email="emma.jones@example.com"/>
-                  <Person firstName="Michael" lastName="Brown" 
-                          email="michael.brown@example.com"/>
-              </FXCollections>
-          </items>
-          <sortOrder>
-              <fx:reference source="firstNameColumn"/>
-          </sortOrder> 
-     </TableView>
-     	-->
-     	
 </VBox>

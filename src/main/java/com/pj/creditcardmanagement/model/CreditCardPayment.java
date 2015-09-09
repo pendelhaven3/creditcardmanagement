@@ -3,10 +3,21 @@ package com.pj.creditcardmanagement.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class CreditCardPayment {
 
+	@Id
+	@GeneratedValue
 	private Long id;
+	
+	@OneToOne
 	private CreditCard creditCard;
+	
 	private Date paymentDate;
 	private BigDecimal amount;
 

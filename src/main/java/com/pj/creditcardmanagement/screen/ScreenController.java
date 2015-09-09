@@ -102,7 +102,11 @@ public class ScreenController {
 	public void showPaymentsListScreen() {
 		stage.setTitle("Credit Card Payments List");
 		stage.setScene(loadSceneFromFXML("paymentList"));
-//		creditCardTransactionScreen.updateDisplay(new CreditCardTransaction());
+	}
+
+	public void showAddPaymentScreen() {
+		stage.setTitle("Add Credit Card Payment");
+		stage.setScene(loadSceneFromFXML("payment"));
 	}
 
 }
