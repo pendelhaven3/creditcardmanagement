@@ -9,5 +9,9 @@ public interface CreditCardPaymentDao {
 	List<CreditCardPayment> getAll();
 
 	void save(CreditCardPayment payment);
+
+	CreditCardPayment get(long id);
+
+	void delete(CreditCardPayment payment);
 	
 }

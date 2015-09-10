@@ -17,6 +17,7 @@ import com.pj.creditcardmanagement.util.NumberUtil;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -32,6 +33,7 @@ public class PaymentController extends AbstractController {
 	@FXML private ComboBox<CreditCard> creditCardComboBox;
 	@FXML private DatePicker paymentDatePicker;
 	@FXML private TextField amountField;
+	@FXML private Button deleteButton;
 	
 	@Parameter private CreditCardPayment payment;
 	
@@ -97,9 +99,28 @@ public class PaymentController extends AbstractController {
 		creditCardComboBox.setItems(FXCollections.observableList(creditCardService.getAllCreditCards()));
 		
 		if (payment != null) {
+			payment = creditCardService.getCreditCardPayment(payment.getId());
+			
 			creditCardComboBox.setValue(payment.getCreditCard());
 			paymentDatePicker.setValue(DateUtil.toLocalDate(payment.getPaymentDate()));
 			amountField.setText(FormatterUtil.formatAmount(payment.getAmount()));
+			deleteButton.setVisible(true);
+		}
+	}
+
+	@FXML 
+	public void deletePayment() {
+		if (ShowDialog.confirm("Do you want to delete this payment?")) {
+			try {
+				creditCardService.delete(payment);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				ShowDialog.unexpectedError();
+				return;
+			}
+			
+			ShowDialog.info("Payment deleted");
+			screenController.showPaymentsListScreen();
 		}
 	}
 	

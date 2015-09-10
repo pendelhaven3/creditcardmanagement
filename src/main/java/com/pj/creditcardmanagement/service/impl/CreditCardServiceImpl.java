@@ -56,5 +56,16 @@ public class CreditCardServiceImpl implements CreditCardService {
 	public void save(CreditCardPayment payment) {
 		creditCardPaymentDao.save(payment);
 	}
+
+	@Override
+	public CreditCardPayment getCreditCardPayment(long id) {
+		return creditCardPaymentDao.get(id);
+	}
+
+	@Transactional
+	@Override
+	public void delete(CreditCardPayment payment) {
+		creditCardPaymentDao.delete(payment);
+	}
 	
 }

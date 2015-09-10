@@ -37,4 +37,14 @@ public class CreditCardPaymentImpl implements CreditCardPaymentDao {
 		}
 	}
 
+	@Override
+	public CreditCardPayment get(long id) {
+		return entityManager.find(CreditCardPayment.class, id);
+	}
+
+	@Override
+	public void delete(CreditCardPayment payment) {
+		entityManager.remove(get(payment.getId()));
+	}
+
 }

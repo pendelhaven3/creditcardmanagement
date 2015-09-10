@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.ToolBar?>
-<?import java.net.URL?>
 <?import java.lang.String?>
 
 <VBox fx:controller="com.pj.creditcardmanagement.controller.PaymentListController" xmlns:fx="http://javafx.com/fxml"

@@ -5,11 +5,6 @@ import java.util.List;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
 
-/**
- * 
- * @author PJ Miranda
- *
- */
 public interface CreditCardService {
 
 	List<CreditCard> getAllCreditCards();
@@ -25,5 +20,9 @@ public interface CreditCardService {
 	List<CreditCardPayment> getAllCreditCardPayments();
 
 	void save(CreditCardPayment payment);
+
+	CreditCardPayment getCreditCardPayment(long id);
+
+	void delete(CreditCardPayment payment);
 	
 }
