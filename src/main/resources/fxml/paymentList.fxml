@@ -8,6 +8,10 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.ToolBar?>
 <?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
 
 <VBox fx:controller="com.pj.creditcardmanagement.controller.PaymentListController" xmlns:fx="http://javafx.com/fxml"
 	alignment="center">
@@ -28,6 +32,20 @@
 			<TableColumn text="Amount" fx:id="amountTableColumn" />
 		</columns>
 	</TableView>
+
+	<GridPane vgap="5" alignment="center">
+		<padding>
+			<Insets top="5" bottom="5" />
+		</padding>
+		<Label text="Total Items:" prefWidth="100" 
+			GridPane.columnIndex="0" GridPane.rowIndex="0" />
+		<Text fx:id="totalItemsText"
+			GridPane.columnIndex="1" GridPane.rowIndex="0" />
+		<Label text="Total Amount:"
+			GridPane.columnIndex="0" GridPane.rowIndex="1" />
+		<Text fx:id="totalAmountText"
+			GridPane.columnIndex="1" GridPane.rowIndex="1" />
+	</GridPane>
 
 	<stylesheets>
 		<String fx:value="css/main.css" />

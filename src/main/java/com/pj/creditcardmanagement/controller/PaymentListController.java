@@ -1,5 +1,6 @@
 package com.pj.creditcardmanagement.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 @Controller
@@ -30,6 +32,8 @@ public class PaymentListController extends AbstractController {
 	@FXML private TableView<CreditCardPayment> paymentsTable;
 	@FXML private TableColumn<CreditCardPayment, String> paymentDateTableColumn;
 	@FXML private TableColumn<CreditCardPayment, String> amountTableColumn;
+	@FXML private Text totalItemsText;
+	@FXML private Text totalAmountText;
 	
 	@FXML 
 	public void doOnBack() {
@@ -75,6 +79,17 @@ public class PaymentListController extends AbstractController {
 				}
 			}
 		} );
+		
+		totalItemsText.setText(String.valueOf(payments.size()));
+		totalAmountText.setText(FormatterUtil.formatAmount(getTotalAmount(payments)));
+	}
+
+	private static BigDecimal getTotalAmount(List<CreditCardPayment> payments) {
+		BigDecimal total = BigDecimal.ZERO;
+		for (CreditCardPayment payment : payments) {
+			total = total.add(payment.getAmount());
+		}
+		return total;
 	}
 
 }
