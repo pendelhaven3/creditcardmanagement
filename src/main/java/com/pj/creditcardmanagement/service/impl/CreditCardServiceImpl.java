@@ -11,6 +11,7 @@ import com.pj.creditcardmanagement.dao.CreditCardDao;
 import com.pj.creditcardmanagement.dao.CreditCardPaymentDao;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
+import com.pj.creditcardmanagement.model.CreditCardPaymentSearchCriteria;
 import com.pj.creditcardmanagement.service.CreditCardService;
 
 @Service
@@ -66,6 +67,11 @@ public class CreditCardServiceImpl implements CreditCardService {
 	@Override
 	public void delete(CreditCardPayment payment) {
 		creditCardPaymentDao.delete(payment);
+	}
+
+	@Override
+	public List<CreditCardPayment> searchCreditCardPayments(CreditCardPaymentSearchCriteria criteria) {
+		return creditCardPaymentDao.search(criteria);
 	}
 	
 }

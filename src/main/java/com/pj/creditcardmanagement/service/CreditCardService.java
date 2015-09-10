@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
+import com.pj.creditcardmanagement.model.CreditCardPaymentSearchCriteria;
 
 public interface CreditCardService {
 
@@ -24,5 +25,7 @@ public interface CreditCardService {
 	CreditCardPayment getCreditCardPayment(long id);
 
 	void delete(CreditCardPayment payment);
+
+	List<CreditCardPayment> searchCreditCardPayments(CreditCardPaymentSearchCriteria criteria);
 	
 }

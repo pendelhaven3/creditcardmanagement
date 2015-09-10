@@ -19,6 +19,7 @@
 	<ToolBar>
 		<Button text="Back" onAction="#doOnBack" />
 		<Button text="Add" onAction="#addPayment" />
+		<Button text="Filter" onAction="#openSearchPaymentsDialog" />
 	</ToolBar>
 	
 	<TableView fx:id="paymentsTable">

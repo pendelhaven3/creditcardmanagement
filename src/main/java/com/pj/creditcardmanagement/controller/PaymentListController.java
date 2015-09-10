@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
+import com.pj.creditcardmanagement.dialog.SearchCreditCardPaymentsDialog;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
+import com.pj.creditcardmanagement.model.CreditCardPaymentSearchCriteria;
 import com.pj.creditcardmanagement.service.CreditCardService;
 import com.pj.creditcardmanagement.util.FormatterUtil;
 
@@ -28,6 +30,7 @@ import javafx.util.Callback;
 public class PaymentListController extends AbstractController {
 
 	@Autowired private CreditCardService creditCardService;
+	@Autowired private SearchCreditCardPaymentsDialog filterCreditCardPaymentsDialog;
 	
 	@FXML private TableView<CreditCardPayment> paymentsTable;
 	@FXML private TableColumn<CreditCardPayment, String> paymentDateTableColumn;
@@ -80,6 +83,10 @@ public class PaymentListController extends AbstractController {
 			}
 		} );
 		
+		updateTotalFields(payments);
+	}
+
+	private void updateTotalFields(List<CreditCardPayment> payments) {
 		totalItemsText.setText(String.valueOf(payments.size()));
 		totalAmountText.setText(FormatterUtil.formatAmount(getTotalAmount(payments)));
 	}
@@ -90,6 +97,19 @@ public class PaymentListController extends AbstractController {
 			total = total.add(payment.getAmount());
 		}
 		return total;
+	}
+
+	@FXML 
+	public void openSearchPaymentsDialog() {
+		filterCreditCardPaymentsDialog.showAndWait();
+	
+		CreditCardPaymentSearchCriteria criteria = 
+				filterCreditCardPaymentsDialog.getCreditCardPaymentSearchCriteria();
+		if (criteria != null) {
+			List<CreditCardPayment> payments = creditCardService.searchCreditCardPayments(criteria);
+			paymentsTable.setItems(FXCollections.observableList(payments));
+			updateTotalFields(payments);
+		}
 	}
 
 }
