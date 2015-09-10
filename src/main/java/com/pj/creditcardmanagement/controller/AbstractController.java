@@ -8,4 +8,6 @@ public abstract class AbstractController {
 
 	@Autowired protected ScreenController screenController;
 	
+	public abstract void updateDisplay();
+	
 }

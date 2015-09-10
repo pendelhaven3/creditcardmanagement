@@ -1,12 +1,18 @@
 package com.pj.creditcardmanagement.screen;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pj.creditcardmanagement.ControllerFactory;
+import com.pj.creditcardmanagement.Parameter;
+import com.pj.creditcardmanagement.controller.AbstractController;
 import com.pj.creditcardmanagement.model.CreditCard;
+import com.pj.creditcardmanagement.model.CreditCardPayment;
 import com.pj.creditcardmanagement.model.CreditCardTransaction;
 
 import javafx.fxml.FXMLLoader;
@@ -14,11 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * 
- * @author PJ Miranda
- *
- */
 @Component
 public class ScreenController {
 
@@ -40,7 +41,6 @@ public class ScreenController {
 	public void showMainScreen() {
 		stage.setTitle("Credit Card Management");
 		stage.setScene(loadSceneFromFXML("main"));
-//		stage.setScene(mainMenuScreen.getScene(WIDTH, HEIGHT));
 		if (!stage.isShowing()) {
 			stage.show();
 		}
@@ -53,6 +53,10 @@ public class ScreenController {
 	}
 
 	private Scene loadSceneFromFXML(String file) {
+		return loadSceneFromFXML(file, null);
+	}
+	
+	private Scene loadSceneFromFXML(String file, Map<String, Object> model) {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setControllerFactory(controllerFactory);
 		
@@ -62,7 +66,31 @@ public class ScreenController {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		
+		if (fxmlLoader.getController() instanceof AbstractController) {
+			AbstractController controller = (AbstractController)fxmlLoader.getController();
+			if (model != null && !model.isEmpty()) {
+				mapParameters(controller, model);
+			}
+			controller.updateDisplay();
+		}
+		
 		return new Scene(root, WIDTH, HEIGHT);
+	}
+
+	private void mapParameters(AbstractController controller, Map<String, Object> model) {
+		Class<? extends AbstractController> clazz = controller.getClass();
+		for (String key : model.keySet()) {
+			try {
+				Field field = clazz.getDeclaredField(key);
+				if (field != null && field.getAnnotation(Parameter.class) != null) {
+					field.setAccessible(true);
+					field.set(controller, model.get(key));
+				}
+			} catch (Exception e) {
+				System.out.println("Error setting parameter " + key);
+			}
+		}
 	}
 
 	private void showScreen(AbstractScreen screen) {
@@ -107,6 +135,15 @@ public class ScreenController {
 	public void showAddPaymentScreen() {
 		stage.setTitle("Add Credit Card Payment");
 		stage.setScene(loadSceneFromFXML("payment"));
+	}
+
+	public void showUpdatePaymentScreen(CreditCardPayment payment) {
+		stage.setTitle("Update Credit Card Payment");
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("payment", payment);
+		
+		stage.setScene(loadSceneFromFXML("payment", paramMap));
 	}
 
 }

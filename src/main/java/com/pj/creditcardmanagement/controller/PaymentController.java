@@ -3,13 +3,16 @@ package com.pj.creditcardmanagement.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.pj.creditcardmanagement.Parameter;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
 import com.pj.creditcardmanagement.screen.ShowDialog;
 import com.pj.creditcardmanagement.service.CreditCardService;
 import com.pj.creditcardmanagement.util.DateUtil;
+import com.pj.creditcardmanagement.util.FormatterUtil;
 import com.pj.creditcardmanagement.util.NumberUtil;
 
 import javafx.collections.FXCollections;
@@ -19,6 +22,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 @Controller
+@Scope("prototype")
 public class PaymentController extends AbstractController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
@@ -29,10 +33,7 @@ public class PaymentController extends AbstractController {
 	@FXML private DatePicker paymentDatePicker;
 	@FXML private TextField amountField;
 	
-	@FXML
-	private void initialize() {
-		creditCardComboBox.setItems(FXCollections.observableList(creditCardService.getAllCreditCards()));
-	}
+	@Parameter private CreditCardPayment payment;
 	
 	@FXML 
 	public void doOnBack() {
@@ -45,7 +46,9 @@ public class PaymentController extends AbstractController {
 			return;
 		}
 		
-		CreditCardPayment payment = new CreditCardPayment();
+		if (payment == null) {
+			payment = new CreditCardPayment();
+		}
 		payment.setCreditCard(creditCardComboBox.getValue());
 		payment.setPaymentDate(DateUtil.toDate(paymentDatePicker.getValue()));
 		payment.setAmount(NumberUtil.toBigDecimal(amountField.getText()));
@@ -87,6 +90,17 @@ public class PaymentController extends AbstractController {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void updateDisplay() {
+		creditCardComboBox.setItems(FXCollections.observableList(creditCardService.getAllCreditCards()));
+		
+		if (payment != null) {
+			creditCardComboBox.setValue(payment.getCreditCard());
+			paymentDatePicker.setValue(DateUtil.toLocalDate(payment.getPaymentDate()));
+			amountField.setText(FormatterUtil.formatAmount(payment.getAmount()));
+		}
 	}
 	
 }
