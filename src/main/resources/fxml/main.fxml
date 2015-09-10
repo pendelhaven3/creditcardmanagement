@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox fx:controller="com.pj.creditcardmanagement.controller.MainMenuController" xmlns:fx="http://javafx.com/fxml"
+	alignment="center" spacing="10">
+	
+	<Button text="Credit Cards" onAction="#showCreditCardsListScreen" />
+	<Button text="Transactions" onAction="#showTransactionsListScreen" />
+	<Button text="Payments" onAction="#showPaymentsListScreen" />
+
+</VBox>
