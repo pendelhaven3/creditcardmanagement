@@ -82,6 +82,9 @@ public class CreditCardTransactionDaoImpl implements CreditCardTransactionDao {
 			predicates.add(
 					builder.lessThanOrEqualTo(transaction.<Date>get("transactionDate"), criteria.getTransactionDateTo()));
 		}
+		if (criteria.getPurchaseType() != null) {
+			predicates.add(builder.equal(transaction.get("purchaseType"), criteria.getPurchaseType()));
+		}
 		queryCriteria.where(predicates.toArray(new Predicate[]{}));
 		
 		try {

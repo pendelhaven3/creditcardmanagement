@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.pj.creditcardmanagement.Constants;
 import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
-import com.pj.creditcardmanagement.dialog.FilterCreditCardTransactionsDialog;
+import com.pj.creditcardmanagement.dialog.SearchCreditCardTransactionsDialog;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardTransaction;
 import com.pj.creditcardmanagement.model.CreditCardTransactionSearchCriteria;
@@ -46,7 +46,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 	private static final String FX_ALIGNMENT_CENTER = "-fx-alignment: CENTER";
 	
 	@Autowired private CreditCardTransactionService creditCardTransactionService;
-	@Autowired private FilterCreditCardTransactionsDialog filterCreditCardTransactionsDialog;
+	@Autowired private SearchCreditCardTransactionsDialog filterCreditCardTransactionsDialog;
 	
 	private TableView<CreditCardTransaction> table;
 	private Button addButton = new Button("Add");

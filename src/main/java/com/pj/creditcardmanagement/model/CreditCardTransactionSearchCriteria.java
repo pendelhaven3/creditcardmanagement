@@ -12,6 +12,7 @@ public class CreditCardTransactionSearchCriteria {
 	private CreditCard creditCard;
 	private Date transactionDateFrom;
 	private Date transactionDateTo;
+	private PurchaseType purchaseType;
 
 	public CreditCard getCreditCard() {
 		return creditCard;
@@ -35,6 +36,14 @@ public class CreditCardTransactionSearchCriteria {
 
 	public void setTransactionDateTo(Date transactionDateTo) {
 		this.transactionDateTo = transactionDateTo;
+	}
+
+	public PurchaseType getPurchaseType() {
+		return purchaseType;
+	}
+
+	public void setPurchaseType(PurchaseType purchaseType) {
+		this.purchaseType = purchaseType;
 	}
 
 }
