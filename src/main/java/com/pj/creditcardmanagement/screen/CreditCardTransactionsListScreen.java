@@ -3,6 +3,18 @@ package com.pj.creditcardmanagement.screen;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.pj.creditcardmanagement.Constants;
+import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
+import com.pj.creditcardmanagement.dialog.FilterCreditCardTransactionsDialog;
+import com.pj.creditcardmanagement.model.CreditCard;
+import com.pj.creditcardmanagement.model.CreditCardTransaction;
+import com.pj.creditcardmanagement.model.CreditCardTransactionSearchCriteria;
+import com.pj.creditcardmanagement.service.CreditCardTransactionService;
+import com.pj.creditcardmanagement.util.FormatterUtil;
+
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,18 +33,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Callback;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.pj.creditcardmanagement.Constants;
-import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
-import com.pj.creditcardmanagement.dialog.FilterCreditCardTransactionsDialog;
-import com.pj.creditcardmanagement.model.CreditCard;
-import com.pj.creditcardmanagement.model.CreditCardTransaction;
-import com.pj.creditcardmanagement.model.CreditCardTransactionSearchCriteria;
-import com.pj.creditcardmanagement.service.CreditCardTransactionService;
-import com.pj.creditcardmanagement.util.FormatterUtil;
 
 /**
  * 
@@ -88,9 +88,13 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 		});
 		amountColumn.setStyle(FX_ALIGNMENT_CENTER_RIGHT);
 		
+		TableColumn<CreditCardTransaction, String> purchaseTypeColumn = new TableColumn<>("Purchase Type");
+		purchaseTypeColumn.setCellValueFactory(new PropertyValueFactory<>("purchaseType"));
+		
 		table.getColumns().add(transactionDateColumn);
 		table.getColumns().add(creditCardColumn);
 		table.getColumns().add(amountColumn);
+		table.getColumns().add(purchaseTypeColumn);
 
 		grid.add(table, 0, 0);
 		

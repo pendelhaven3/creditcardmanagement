@@ -40,4 +40,12 @@ public interface CreditCardService {
 
 	List<CreditCardTransaction> findAllTransactionsByPurchaseType(PurchaseType purchaseType);
 
+	CreditCardTransaction getCreditCardTransaction(long id);
+
+	List<PurchaseType> getAllPurchaseTypes();
+
+	void save(CreditCardTransaction transaction);
+
+	void delete(CreditCardTransaction transaction);
+
 }

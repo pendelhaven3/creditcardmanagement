@@ -31,7 +31,6 @@ public class ScreenController {
 	@Autowired private CreditCardsListScreen creditCardsListScreen;
 	@Autowired private CreditCardScreen creditCardScreen;
 	@Autowired private CreditCardTransactionsListScreen creditCardTransactionsListScreen;
-	@Autowired private CreditCardTransactionScreen creditCardTransactionScreen;
 	
 	private Stage stage;
 	
@@ -118,14 +117,16 @@ public class ScreenController {
 
 	public void showUpdateCreditCardTransactionScreen(CreditCardTransaction transaction) {
 		stage.setTitle("Update Credit Card Transaction");
-		showScreen(creditCardTransactionScreen);
-		creditCardTransactionScreen.updateDisplay(transaction);
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("transaction", transaction);
+		
+		loadSceneFromFXML("transaction", paramMap);
 	}
 
 	public void showAddCreditCardTransactionScreen() {
 		stage.setTitle("Add Credit Card Transaction");
-		showScreen(creditCardTransactionScreen);
-		creditCardTransactionScreen.updateDisplay(new CreditCardTransaction());
+		loadSceneFromFXML("transaction");
 	}
 
 	public void showPaymentsListScreen() {

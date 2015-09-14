@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pj.creditcardmanagement.dao.CreditCardDao;
 import com.pj.creditcardmanagement.dao.CreditCardPaymentDao;
+import com.pj.creditcardmanagement.dao.CreditCardTransactionDao;
 import com.pj.creditcardmanagement.dao.PurchaseTypeDao;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
@@ -24,6 +25,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	@Autowired private CreditCardDao creditCardDao;
 	@Autowired private CreditCardPaymentDao creditCardPaymentDao;
 	@Autowired private PurchaseTypeDao purchaseTypeDao;
+	@Autowired private CreditCardTransactionDao creditCardTransactionDao;
 	
 	@Override
 	public List<CreditCard> getAllCreditCards() {
@@ -104,6 +106,28 @@ public class CreditCardServiceImpl implements CreditCardService {
 	@Override
 	public List<CreditCardTransaction> findAllTransactionsByPurchaseType(PurchaseType purchaseType) {
 		return new ArrayList<>();
+	}
+
+	@Override
+	public CreditCardTransaction getCreditCardTransaction(long id) {
+		return creditCardTransactionDao.get(id);
+	}
+
+	@Override
+	public List<PurchaseType> getAllPurchaseTypes() {
+		return purchaseTypeDao.getAll();
+	}
+
+	@Transactional
+	@Override
+	public void save(CreditCardTransaction transaction) {
+		creditCardTransactionDao.save(transaction);
+	}
+
+	@Transactional
+	@Override
+	public void delete(CreditCardTransaction transaction) {
+		creditCardTransactionDao.delete(transaction);
 	}
 
 }
