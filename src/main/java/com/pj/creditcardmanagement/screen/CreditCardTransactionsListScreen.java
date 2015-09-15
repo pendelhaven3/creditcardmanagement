@@ -3,6 +3,18 @@ package com.pj.creditcardmanagement.screen;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.pj.creditcardmanagement.Constants;
+import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
+import com.pj.creditcardmanagement.dialog.SearchCreditCardTransactionsDialog;
+import com.pj.creditcardmanagement.model.CreditCard;
+import com.pj.creditcardmanagement.model.CreditCardTransaction;
+import com.pj.creditcardmanagement.model.CreditCardTransactionSearchCriteria;
+import com.pj.creditcardmanagement.service.CreditCardTransactionService;
+import com.pj.creditcardmanagement.util.FormatterUtil;
+
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,18 +34,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Callback;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.pj.creditcardmanagement.Constants;
-import com.pj.creditcardmanagement.component.DoubleClickEventHandler;
-import com.pj.creditcardmanagement.dialog.FilterCreditCardTransactionsDialog;
-import com.pj.creditcardmanagement.model.CreditCard;
-import com.pj.creditcardmanagement.model.CreditCardTransaction;
-import com.pj.creditcardmanagement.model.CreditCardTransactionSearchCriteria;
-import com.pj.creditcardmanagement.service.CreditCardTransactionService;
-import com.pj.creditcardmanagement.util.FormatterUtil;
-
 /**
  * 
  * @author PJ Miranda
@@ -46,7 +46,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 	private static final String FX_ALIGNMENT_CENTER = "-fx-alignment: CENTER";
 	
 	@Autowired private CreditCardTransactionService creditCardTransactionService;
-	@Autowired private FilterCreditCardTransactionsDialog filterCreditCardTransactionsDialog;
+	@Autowired private SearchCreditCardTransactionsDialog searchCreditCardTransactionsDialog;
 	
 	private TableView<CreditCardTransaction> table;
 	private Button addButton = new Button("Add");
@@ -88,9 +88,13 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 		});
 		amountColumn.setStyle(FX_ALIGNMENT_CENTER_RIGHT);
 		
+		TableColumn<CreditCardTransaction, String> purchaseTypeColumn = new TableColumn<>("Purchase Type");
+		purchaseTypeColumn.setCellValueFactory(new PropertyValueFactory<>("purchaseType"));
+		
 		table.getColumns().add(transactionDateColumn);
 		table.getColumns().add(creditCardColumn);
 		table.getColumns().add(amountColumn);
+		table.getColumns().add(purchaseTypeColumn);
 
 		grid.add(table, 0, 0);
 		
@@ -143,6 +147,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 		List<CreditCardTransaction> transactions = creditCardTransactionService.getAllCreditCardTransactions();
 		table.setItems(FXCollections.observableList(transactions));
 		updateFields(transactions);
+		searchCreditCardTransactionsDialog.updateDisplay();
 	}
 
 	private void updateFields(List<CreditCardTransaction> transactions) {
@@ -174,10 +179,10 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 	}
 
 	private void showFilterCreditCardTransactionsDialog() {
-		filterCreditCardTransactionsDialog.showAndWait();
+		searchCreditCardTransactionsDialog.showAndWait();
 		
 		CreditCardTransactionSearchCriteria criteria = 
-				filterCreditCardTransactionsDialog.getCreditCardTransactionSearchCriteria();
+				searchCreditCardTransactionsDialog.getCreditCardTransactionSearchCriteria();
 		if (criteria != null) {
 			List<CreditCardTransaction> transactions = creditCardTransactionService.searchCreditCardTransactions(criteria);
 			table.setItems(FXCollections.observableList(transactions));

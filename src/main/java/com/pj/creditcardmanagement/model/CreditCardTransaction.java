@@ -25,6 +25,9 @@ public class CreditCardTransaction {
 
 	private BigDecimal amount;
 	private Date transactionDate;
+	
+	@OneToOne
+	private PurchaseType purchaseType;
 
 	public Long getId() {
 		return id;
@@ -60,6 +63,14 @@ public class CreditCardTransaction {
 
 	public boolean isNew() {
 		return id == null;
+	}
+
+	public PurchaseType getPurchaseType() {
+		return purchaseType;
+	}
+
+	public void setPurchaseType(PurchaseType purchaseType) {
+		this.purchaseType = purchaseType;
 	}
 
 }

@@ -14,6 +14,7 @@ import com.pj.creditcardmanagement.controller.AbstractController;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
 import com.pj.creditcardmanagement.model.CreditCardTransaction;
+import com.pj.creditcardmanagement.model.PurchaseType;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +31,6 @@ public class ScreenController {
 	@Autowired private CreditCardsListScreen creditCardsListScreen;
 	@Autowired private CreditCardScreen creditCardScreen;
 	@Autowired private CreditCardTransactionsListScreen creditCardTransactionsListScreen;
-	@Autowired private CreditCardTransactionScreen creditCardTransactionScreen;
 	
 	private Stage stage;
 	
@@ -40,7 +40,7 @@ public class ScreenController {
 
 	public void showMainScreen() {
 		stage.setTitle("Credit Card Management");
-		stage.setScene(loadSceneFromFXML("main"));
+		loadSceneFromFXML("main");
 		if (!stage.isShowing()) {
 			stage.show();
 		}
@@ -52,11 +52,11 @@ public class ScreenController {
 		creditCardsListScreen.updateDisplay();
 	}
 
-	private Scene loadSceneFromFXML(String file) {
-		return loadSceneFromFXML(file, null);
+	private void loadSceneFromFXML(String file) {
+		loadSceneFromFXML(file, null);
 	}
 	
-	private Scene loadSceneFromFXML(String file, Map<String, Object> model) {
+	private void loadSceneFromFXML(String file, Map<String, Object> model) {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setControllerFactory(controllerFactory);
 		
@@ -67,6 +67,8 @@ public class ScreenController {
 			throw new RuntimeException(e);
 		}
 		
+		stage.setScene(new Scene(root, WIDTH, HEIGHT));
+		
 		if (fxmlLoader.getController() instanceof AbstractController) {
 			AbstractController controller = (AbstractController)fxmlLoader.getController();
 			if (model != null && !model.isEmpty()) {
@@ -74,8 +76,6 @@ public class ScreenController {
 			}
 			controller.updateDisplay();
 		}
-		
-		return new Scene(root, WIDTH, HEIGHT);
 	}
 
 	private void mapParameters(AbstractController controller, Map<String, Object> model) {
@@ -117,24 +117,26 @@ public class ScreenController {
 
 	public void showUpdateCreditCardTransactionScreen(CreditCardTransaction transaction) {
 		stage.setTitle("Update Credit Card Transaction");
-		showScreen(creditCardTransactionScreen);
-		creditCardTransactionScreen.updateDisplay(transaction);
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("transaction", transaction);
+		
+		loadSceneFromFXML("transaction", paramMap);
 	}
 
 	public void showAddCreditCardTransactionScreen() {
 		stage.setTitle("Add Credit Card Transaction");
-		showScreen(creditCardTransactionScreen);
-		creditCardTransactionScreen.updateDisplay(new CreditCardTransaction());
+		loadSceneFromFXML("transaction");
 	}
 
 	public void showPaymentsListScreen() {
 		stage.setTitle("Credit Card Payments List");
-		stage.setScene(loadSceneFromFXML("paymentList"));
+		loadSceneFromFXML("paymentList");
 	}
 
 	public void showAddPaymentScreen() {
 		stage.setTitle("Add Credit Card Payment");
-		stage.setScene(loadSceneFromFXML("payment"));
+		loadSceneFromFXML("payment");
 	}
 
 	public void showUpdatePaymentScreen(CreditCardPayment payment) {
@@ -143,7 +145,26 @@ public class ScreenController {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("payment", payment);
 		
-		stage.setScene(loadSceneFromFXML("payment", paramMap));
+		loadSceneFromFXML("payment", paramMap);
 	}
 
+	public void showPurchaseTypesListScreen() {
+		loadSceneFromFXML("purchaseTypeList");
+	}
+
+	public void showAddPurchaseTypeScreen() {
+		loadSceneFromFXML("purchaseType");
+	}
+
+	public void setTitle(String title) {
+		stage.setTitle(title);
+	}
+
+	public void showUpdatePurchaseTypeScreen(PurchaseType purchaseType) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("purchaseType", purchaseType);
+		
+		loadSceneFromFXML("purchaseType", paramMap);
+	}
+	
 }

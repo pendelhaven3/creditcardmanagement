@@ -5,6 +5,8 @@ import java.util.List;
 import com.pj.creditcardmanagement.model.CreditCard;
 import com.pj.creditcardmanagement.model.CreditCardPayment;
 import com.pj.creditcardmanagement.model.CreditCardPaymentSearchCriteria;
+import com.pj.creditcardmanagement.model.CreditCardTransaction;
+import com.pj.creditcardmanagement.model.PurchaseType;
 
 public interface CreditCardService {
 
@@ -27,5 +29,23 @@ public interface CreditCardService {
 	void delete(CreditCardPayment payment);
 
 	List<CreditCardPayment> searchCreditCardPayments(CreditCardPaymentSearchCriteria criteria);
-	
+
+	void save(PurchaseType purchaseType);
+
+	PurchaseType getPurchaseType(long id);
+
+	void delete(PurchaseType purchaseType);
+
+	PurchaseType findPurchaseTypeByDescription(String description);
+
+	List<CreditCardTransaction> findAllTransactionsByPurchaseType(PurchaseType purchaseType);
+
+	CreditCardTransaction getCreditCardTransaction(long id);
+
+	List<PurchaseType> getAllPurchaseTypes();
+
+	void save(CreditCardTransaction transaction);
+
+	void delete(CreditCardTransaction transaction);
+
 }

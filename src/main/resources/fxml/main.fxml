@@ -8,6 +8,9 @@
 	
 	<Button text="Credit Cards" onAction="#showCreditCardsListScreen" />
 	<Button text="Transactions" onAction="#showTransactionsListScreen" />
+	<!-- 
 	<Button text="Payments" onAction="#showPaymentsListScreen" />
+	-->
+	<Button text="Purchase Types" onAction="#showPurchaseTypesListScreen" />
 
 </VBox>

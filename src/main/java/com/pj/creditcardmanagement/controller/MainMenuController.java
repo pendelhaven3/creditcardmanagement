@@ -28,4 +28,9 @@ public class MainMenuController extends AbstractController {
 	public void updateDisplay() {
 	}
 
+	@FXML 
+	public void showPurchaseTypesListScreen() {
+		screenController.showPurchaseTypesListScreen();
+	}
+
 }
