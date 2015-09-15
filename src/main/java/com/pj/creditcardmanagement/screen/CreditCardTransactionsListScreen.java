@@ -46,7 +46,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 	private static final String FX_ALIGNMENT_CENTER = "-fx-alignment: CENTER";
 	
 	@Autowired private CreditCardTransactionService creditCardTransactionService;
-	@Autowired private SearchCreditCardTransactionsDialog filterCreditCardTransactionsDialog;
+	@Autowired private SearchCreditCardTransactionsDialog searchCreditCardTransactionsDialog;
 	
 	private TableView<CreditCardTransaction> table;
 	private Button addButton = new Button("Add");
@@ -147,6 +147,7 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 		List<CreditCardTransaction> transactions = creditCardTransactionService.getAllCreditCardTransactions();
 		table.setItems(FXCollections.observableList(transactions));
 		updateFields(transactions);
+		searchCreditCardTransactionsDialog.updateDisplay();
 	}
 
 	private void updateFields(List<CreditCardTransaction> transactions) {
@@ -178,10 +179,10 @@ public class CreditCardTransactionsListScreen extends StandardScreen {
 	}
 
 	private void showFilterCreditCardTransactionsDialog() {
-		filterCreditCardTransactionsDialog.showAndWait();
+		searchCreditCardTransactionsDialog.showAndWait();
 		
 		CreditCardTransactionSearchCriteria criteria = 
-				filterCreditCardTransactionsDialog.getCreditCardTransactionSearchCriteria();
+				searchCreditCardTransactionsDialog.getCreditCardTransactionSearchCriteria();
 		if (criteria != null) {
 			List<CreditCardTransaction> transactions = creditCardTransactionService.searchCreditCardTransactions(criteria);
 			table.setItems(FXCollections.observableList(transactions));

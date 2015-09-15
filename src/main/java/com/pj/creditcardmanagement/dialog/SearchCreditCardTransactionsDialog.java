@@ -49,14 +49,11 @@ public class SearchCreditCardTransactionsDialog extends Stage {
 		setTitle("Search Credit Card Transactions");
 	}
 	
-	@Override
-	public void showAndWait() {
+	public void updateDisplay() {
 		setScene(null);
 		setScene(loadSceneFromFXML());
-		
-		super.showAndWait();
 	}
-
+	
 	private Scene loadSceneFromFXML() {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setController(this);
